@@ -1,9 +1,8 @@
 <?php
-/**
- * Exporta los registros a un archivo Excel en formato xlsx.
- */
+
 require_once __DIR__ . '/../app/config/config.php';
 require_once __DIR__ . '/../app/controllers/ParticipanteController.php';
+require_once __DIR__ . '/../app/helpers/TextoHelper.php';
 
 $controller = new ParticipanteController();
 $registros = $controller->listarReportes();
@@ -74,7 +73,7 @@ file_put_contents($dir . '/xl/styles.xml', <<<'XML'
 XML);
 
 $rows = [];
-$headers = ['Identidad','Nombre','Apellido','Edad','Sexo','País','Nacionalidad','Correo','Celular','Temas','Observaciones','Fecha','Firma','Estado'];
+$headers = ['Identidad','Nombre','Apellido','Edad','Sexo','País','Nacionalidad','Correo','Celular','Temas','Observaciones','Estado'];
 $rows[] = $headers;
 foreach ($registros as $registro) {
     $rows[] = [
@@ -89,7 +88,6 @@ foreach ($registros as $registro) {
         $registro['celular'],
         $registro['temas'] ?? '',
         $registro['observaciones'] ?? '',
-        $registro['firma_openssl'],
         $registro['estado'],
     ];
 }

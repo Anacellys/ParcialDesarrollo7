@@ -4,6 +4,7 @@
  */
 require_once __DIR__ . '/../app/config/config.php';
 require_once __DIR__ . '/../app/controllers/ParticipanteController.php';
+require_once __DIR__ . '/../app/helpers/TextoHelper.php';
 
 $controller = new ParticipanteController();
 $registros = $controller->listarReportes();

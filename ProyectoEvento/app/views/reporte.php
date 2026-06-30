@@ -49,8 +49,6 @@ ob_start();
                             <td><?= htmlspecialchars($registro['celular']) ?></td>
                             <td><?= htmlspecialchars($registro['temas'] ?? '') ?></td>
                             <td><?= htmlspecialchars($registro['observaciones'] ?? '') ?></td>
-                            <td class="small text-break"><?= htmlspecialchars($registro['firma_openssl']) ?></td>
-                            <td><?= htmlspecialchars(TextoHelper::formatearFecha($registro['fecha_registro'] ?? null)) ?></td>
                             <td><span class="fw-bold <?= $registro['estado_clase'] ?>"><?= htmlspecialchars($registro['estado']) ?></span></td>
                         </tr>
                     <?php endforeach; ?>

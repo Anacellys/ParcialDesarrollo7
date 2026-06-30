@@ -1,8 +1,5 @@
 <?php
-/**
- * Modelo ParticipanteModel.
- * Administra los registros de participantes y su relación con los temas.
- */
+
 require_once __DIR__ . '/../config/config.php';
 require_once __DIR__ . '/../config/Conexion.php';
 
@@ -19,7 +16,7 @@ class ParticipanteModel
     {
         $this->pdo->beginTransaction();
         try {
-            $stmt = $this->pdo->prepare('INSERT INTO inscriptores (identidad, nombre, apellido, edad, sexo, id_pais_residencia, id_nacionalidad, correo, celular, observaciones, firma_openssl) VALUES (:identidad, :nombre, :apellido, :edad, :sexo, :id_pais_residencia, :id_nacionalidad, :correo, :celular, :observaciones, :firma)');
+            $stmt = $this->pdo->prepare('INSERT INTO inscriptores (identidad, nombre, apellido, edad, sexo, id_pais_residencia, id_nacionalidad, correo, celular, observaciones, firma_openssl, fecha_registro) VALUES (:identidad, :nombre, :apellido, :edad, :sexo, :id_pais_residencia, :id_nacionalidad, :correo, :celular, :observaciones, :firma, :fecha_registro)');
             $stmt->execute([
                 ':identidad' => $datos['identidad'],
                 ':nombre' => $datos['nombre'],
@@ -32,6 +29,7 @@ class ParticipanteModel
                 ':celular' => $datos['celular'],
                 ':observaciones' => $datos['observacion'],
                 ':firma' => $firma,
+                ':fecha_registro' => $datos['fecha_registro'] ?? date('Y-m-d H:i:s'),
             ]);
 
             $idParticipante = (int)$this->pdo->lastInsertId();
@@ -53,12 +51,13 @@ class ParticipanteModel
 
     public function listar(): array
     {
-        $sql = 'SELECT i.id_inscriptor, i.identidad, i.nombre, i.apellido, i.edad, i.sexo, pr.nombre AS pais, i.correo, i.celular, i.observaciones, i.firma_openssl, GROUP_CONCAT(ai.nombre ORDER BY ai.nombre SEPARATOR ", ") AS temas
+        $sql = 'SELECT i.id_inscriptor, i.identidad, i.nombre, i.apellido, i.edad, i.sexo, pr.nombre AS pais, pn.nombre AS nacionalidad, i.correo, i.celular, i.observaciones, i.firma_openssl, i.fecha_registro, GROUP_CONCAT(ai.nombre ORDER BY ai.nombre SEPARATOR ", ") AS temas
                 FROM inscriptores i
                 LEFT JOIN inscriptor_area ia ON i.id_inscriptor = ia.id_inscriptor
                 LEFT JOIN areas_interes ai ON ia.id_area = ai.id_area
                 LEFT JOIN paises pr ON i.id_pais_residencia = pr.id_pais
-                GROUP BY i.id_inscriptor, i.identidad, i.nombre, i.apellido, i.edad, i.sexo, pr.nombre, i.correo, i.celular, i.observaciones, i.firma_openssl
+                LEFT JOIN paises pn ON i.id_nacionalidad = pn.id_pais
+                GROUP BY i.id_inscriptor, i.identidad, i.nombre, i.apellido, i.edad, i.sexo, pr.nombre, pn.nombre, i.correo, i.celular, i.observaciones, i.firma_openssl, i.fecha_registro
                 ORDER BY i.id_inscriptor DESC';
         $stmt = $this->pdo->query($sql);
         return $stmt->fetchAll();

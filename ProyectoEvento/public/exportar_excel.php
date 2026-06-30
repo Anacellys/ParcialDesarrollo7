@@ -74,7 +74,7 @@ file_put_contents($dir . '/xl/styles.xml', <<<'XML'
 XML);
 
 $rows = [];
-$headers = ['Identidad','Nombre','Apellido','Edad','Sexo','País','Correo','Celular','Temas','Observaciones','Firma','Estado'];
+$headers = ['Identidad','Nombre','Apellido','Edad','Sexo','País','Nacionalidad','Correo','Celular','Temas','Observaciones','Fecha','Firma','Estado'];
 $rows[] = $headers;
 foreach ($registros as $registro) {
     $rows[] = [
@@ -84,10 +84,11 @@ foreach ($registros as $registro) {
         $registro['edad'],
         $registro['sexo'],
         $registro['pais'],
+        $registro['nacionalidad'] ?? '',
         $registro['correo'],
         $registro['celular'],
         $registro['temas'] ?? '',
-        $registro['observacion'],
+        $registro['observaciones'] ?? '',
         $registro['firma_openssl'],
         $registro['estado'],
     ];

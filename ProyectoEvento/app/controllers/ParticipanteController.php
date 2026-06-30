@@ -50,6 +50,7 @@ class ParticipanteController
             'correo' => Sanitizador::limpiarCorreo($post['correo'] ?? ''),
             'celular' => Sanitizador::limpiarTexto($post['celular'] ?? ''),
             'observacion' => Sanitizador::limpiarTexto($post['observacion'] ?? ''),
+            'fecha_registro' => Sanitizador::limpiarTexto($post['fecha_registro'] ?? date('Y-m-d H:i:s')),
         ];
 
         $erroresValidacion = Validaciones::validarFormulario($datosLimpios, $temas);
@@ -93,6 +94,7 @@ class ParticipanteController
                 'celular' => $registro['celular'],
                 'sexo' => $registro['sexo'],
             ], $registro['firma_openssl'] ?? '');
+            $registro['fecha_registro'] = $registro['fecha_registro'] ?? null;
             $registro['estado_clase'] = strpos($registro['estado'], 'Registro íntegro') !== false ? 'text-success' : 'text-danger';
         }
         return $registros;

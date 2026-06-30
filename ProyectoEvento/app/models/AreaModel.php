@@ -1,8 +1,5 @@
 <?php
-/**
- * Modelo AreaModel.
- * Gestiona las áreas de interés registradas.
- */
+
 require_once __DIR__ . '/../config/config.php';
 require_once __DIR__ . '/../config/Conexion.php';
 

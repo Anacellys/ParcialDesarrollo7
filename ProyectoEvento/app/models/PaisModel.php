@@ -1,8 +1,5 @@
 <?php
-/**
- * Modelo PaisModel.
- * Gestiona los países disponibles para el formulario.
- */
+
 require_once __DIR__ . '/../config/config.php';
 require_once __DIR__ . '/../config/Conexion.php';
 

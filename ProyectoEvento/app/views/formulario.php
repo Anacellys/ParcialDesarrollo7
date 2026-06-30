@@ -13,6 +13,7 @@ ob_start();
             </div>
             <div class="card-body p-4">
                 <form method="post" action="index.php">
+                    <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'] ?? '') ?>">
                     <div class="row g-3">
                         <div class="col-md-6">
                             <label class="form-label">Identidad</label>
@@ -86,7 +87,7 @@ ob_start();
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">Fecha automática</label>
-                            <input type="text" class="form-control" value="<?= date('Y-m-d H:i:s') ?>" disabled>
+                            <input type="text" class="form-control" name="fecha_registro" value="<?= date('Y-m-d H:i:s') ?>" readonly>
                         </div>
                         <div class="col-12 d-flex gap-2">
                             <button type="submit" class="btn btn-primary px-4"><i class="bi bi-save me-2"></i>Guardar</button>

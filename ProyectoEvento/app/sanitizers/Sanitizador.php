@@ -9,7 +9,6 @@ class Sanitizador
     {
         $valor = trim($valor);
         $valor = strip_tags($valor);
-        $valor = htmlspecialchars($valor, ENT_QUOTES, 'UTF-8');
         $valor = preg_replace('/\s+/', ' ', $valor) ?? $valor;
         return $valor;
     }
@@ -22,7 +21,13 @@ class Sanitizador
 
     public static function limpiarEntero(string $valor): int
     {
-        return (int)filter_var($valor, FILTER_SANITIZE_NUMBER_INT);
+        $valor = trim((string)$valor);
+        if ($valor === '') {
+            return 0;
+        }
+
+        $valor = preg_replace('/[^0-9]/', '', $valor) ?? '';
+        return (int)$valor;
     }
 
     public static function limpiarArray(array $valores): array

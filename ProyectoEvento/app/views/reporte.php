@@ -25,11 +25,13 @@ ob_start();
                         <th>Edad</th>
                         <th>Sexo</th>
                         <th>País</th>
+                        <th>Nacionalidad</th>
                         <th>Correo</th>
                         <th>Celular</th>
                         <th>Temas</th>
                         <th>Observaciones</th>
                         <th>Firma</th>
+                        <th>Fecha</th>
                         <th>Estado</th>
                     </tr>
                 </thead>
@@ -42,11 +44,13 @@ ob_start();
                             <td><?= (int)$registro['edad'] ?></td>
                             <td><?= htmlspecialchars($registro['sexo']) ?></td>
                             <td><?= htmlspecialchars($registro['pais']) ?></td>
+                            <td><?= htmlspecialchars($registro['nacionalidad'] ?? '') ?></td>
                             <td><?= htmlspecialchars($registro['correo']) ?></td>
                             <td><?= htmlspecialchars($registro['celular']) ?></td>
                             <td><?= htmlspecialchars($registro['temas'] ?? '') ?></td>
                             <td><?= htmlspecialchars($registro['observaciones'] ?? '') ?></td>
                             <td class="small text-break"><?= htmlspecialchars($registro['firma_openssl']) ?></td>
+                            <td><?= htmlspecialchars(TextoHelper::formatearFecha($registro['fecha_registro'] ?? null)) ?></td>
                             <td><span class="fw-bold <?= $registro['estado_clase'] ?>"><?= htmlspecialchars($registro['estado']) ?></span></td>
                         </tr>
                     <?php endforeach; ?>

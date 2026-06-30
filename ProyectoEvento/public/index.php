@@ -5,6 +5,9 @@
  */
 require_once __DIR__ . '/../app/config/config.php';
 require_once __DIR__ . '/../app/controllers/ParticipanteController.php';
+require_once __DIR__ . '/../app/helpers/TextoHelper.php';
+
+session_start();
 
 $controller = new ParticipanteController();
 $mensaje = '';
@@ -13,14 +16,22 @@ $datos = [];
 $temasSeleccionados = [];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $resultado = $controller->guardar($_POST);
-    if ($resultado['ok']) {
-        $mensaje = $resultado['mensaje'];
+    if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'] ?? '', $_POST['csrf_token'])) {
+        $errores = ['Solicitud inválida.'];
     } else {
-        $errores = $resultado['errores'];
-        $datos = $resultado['datos'];
-        $temasSeleccionados = $_POST['temas'] ?? [];
+        $resultado = $controller->guardar($_POST);
+        if ($resultado['ok']) {
+            $mensaje = $resultado['mensaje'];
+        } else {
+            $errores = $resultado['errores'];
+            $datos = $resultado['datos'];
+            $temasSeleccionados = $_POST['temas'] ?? [];
+        }
     }
+}
+
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 }
 
 $datosVista = $controller->mostrarFormulario();

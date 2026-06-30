@@ -14,7 +14,8 @@ class Conexion
                 PDO::ATTR_EMULATE_PREPARES => false,
             ]);
         } catch (PDOException $e) {
-            throw new Exception('No fue posible conectar con la base de datos: ' . $e->getMessage());
+            error_log('Error de conexión a la base de datos: ' . $e->getMessage());
+            throw new Exception('No fue posible completar la solicitud en este momento.');
         }
     }
 

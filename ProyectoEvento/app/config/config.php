@@ -1,8 +1,4 @@
 <?php
-/**
- * Archivo de configuración principal del proyecto.
- * Define constantes base para rutas y credenciales de la base de datos.
- */
 
 if (!defined('DB_HOST')) {
     define('DB_HOST', 'localhost');

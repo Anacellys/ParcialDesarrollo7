@@ -49,13 +49,10 @@
     <div class="container">
         <div class="row align-items-center">
             <div class="col-md-6">
-                <h5 class="fw-bold">© 2025 ITECH</h5>
+                <h5 class="fw-bold">© 2025 Anacelis Boniche</h5>
                 <p class="mb-0">All Rights Reserved</p>
             </div>
-            <div class="col-md-6 text-md-end">
-                <p class="mb-1"><i class="bi bi-envelope me-2"></i>contacto@itech.com</p>
-                <p class="mb-0"><i class="bi bi-telephone me-2"></i>+504 2222-2222</p>
-            </div>
+           
         </div>
     </div>
 </footer>
